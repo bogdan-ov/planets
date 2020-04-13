@@ -1,0 +1,1 @@
+camera.position.z = 5;
