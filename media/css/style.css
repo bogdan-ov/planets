@@ -13,9 +13,10 @@ body {
     font-family: Montserrat;
     font-size: 16px;
 
-    /* background: #0C0E18; */
     background: radial-gradient(circle at center, #0d0f1b,#010307);
     color: #fff;
+
+    -webkit-user-select: none;
 }
 body::after {
     content: "";
@@ -41,6 +42,24 @@ canvas {
 .main {
     min-width: 100vw;
     min-height: 100vh;
+}
+/* > Cursor */
+.cursor {
+    position: fixed;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform .3s;
+}
+/* > > Text */
+.cursor-text {
+    font-size: 18px;
+    
+    position: fixed;
+    transform: translate(-50%, 10px);
+    text-align: center;
+    opacity: 0;
+
+    transition: .3s;
+    transition-property: transform, opacity;
 }
 
 /* Sections */

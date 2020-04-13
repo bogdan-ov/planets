@@ -6,6 +6,8 @@ renderer.setSize(
     window.innerWidth, 
     window.innerHeight
 );
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 onresize = ()=> {
 
@@ -22,26 +24,27 @@ onresize = ()=> {
 const sun = new THREE.Mesh(
     new THREE.CircleGeometry(3.5, 32),
     new THREE.MeshBasicMaterial({ color: "#ffeeaa" })
-    );
-    scene.add(sun);
-    const godrays_effect = new POSTPROCESSING.GodRaysEffect(
-        camera,
-        sun,
-        {
-            resolutionScale: 1,
-            density: 1.2,
-            decay: .95,
-            weight: .9,
-            samples: 100
-        }
-        );
-        const 
-        render_pass = new POSTPROCESSING.RenderPass(scene, camera),
-        effect_pass = new POSTPROCESSING.EffectPass(scene, godrays_effect);
-        effect_pass.renderToScreen = true;
-        const pass = new POSTPROCESSING.EffectPass(
-            camera,
-            new POSTPROCESSING.BloomEffect
+);
+scene.add(sun);
+
+const godrays_effect = new POSTPROCESSING.GodRaysEffect(
+    camera,
+    sun,
+    {
+        resolutionScale: 1,
+        density: 1.2,
+        decay: .95,
+        weight: .9,
+        samples: 100
+}
+);
+const 
+render_pass = new POSTPROCESSING.RenderPass(scene, camera),
+effect_pass = new POSTPROCESSING.EffectPass(scene, godrays_effect);
+effect_pass.renderToScreen = true;
+const pass = new POSTPROCESSING.EffectPass(
+    camera,
+    new POSTPROCESSING.BloomEffect
 );
 pass.renderToScreen = true;
 

@@ -1,12 +1,23 @@
+let page = 1;
+
+$("#explore").on("click", ()=> {
+    page = page === 1 ? 2 : 1;
+});
+
 function init() {
 
     const planet = new Planet(2);
 
     let sputns = [];
-    for (let count = 5; count --;) {
+    let descs = [
+        "Qa15", "Qdmb19",
+        "Qb13", "Edang404",
+        "Gdoo2"
+    ]
+    for (let count = 0; count ++ < 5;) {
 
         sputns.push(
-            new Planet(.2)
+            new Planet(.2, "sputn", descs[count-1])
         );
 
     }
@@ -40,29 +51,72 @@ function init() {
     function update() {
 
         let speed = delta / 50;
-        planet.mesh.position.set(
-            sin(speed) * 30,
-            0,
-            cos(speed) * 30
-        );
+
+        planet.mesh.rotateY(.002);
+        if (page === 1) {
+
+            planet.mesh.position.set(
+                sin(speed) * 30,
+                0,
+                cos(speed) * 30
+            );
+
+        }
+        if (page === 2) {
+
+            planet.mesh.position.set(
+                sin(speed + 20) * 30,
+                0,
+                cos(speed + 20) * 30
+            );
+
+        }
+
         for (let sputn in sputns) {
+
+            let a = sputn * (PI / (sputns.length / 2)) + speed;
         
             sputns[sputn].mesh.position.set(
-                sin(sputn + speed) * 3 + planet.mesh.position.x,
-                cos(speed) * 3 + planet.mesh.position.y,
-                cos(sputn - speed) * 3 + planet.mesh.position.z,
+                sin(a) * 3 + planet.mesh.position.x,
+                sin(-a) * 3 + planet.mesh.position.y,
+                cos(a) * 3 + planet.mesh.position.z,
             );
         
         }
 
-        camera.position.set(
-            planet.mesh.position.x + mouse.center.x / 1000, 
-            planet.mesh.position.y + 2 - mouse.center.y / 1000,
-            planet.mesh.position.z + 5
-        );
+        // camera.position.set(
+        //     planet.mesh.position.x + mouse.center.x / 1000, 
+        //     planet.mesh.position.y + 2 - mouse.center.y / 1000,
+        //     planet.mesh.position.z + 5
+        // );
+        camera.position.x += (planet.mesh.position.x - (camera.position.x + mouse.center.x / 500)) / 50;
+        camera.position.y += ((planet.mesh.position.y + 2) - (camera.position.y - mouse.center.y / 500)) / 50;
+        camera.position.z += ((planet.mesh.position.z + 5) - camera.position.z) / 50;
         
         camera.lookAt(planet.mesh.position);
         sun.lookAt(camera.position);
+
+        // Raycasting
+        raycaster.setFromCamera(_mouse, camera);
+
+        let intersects = raycaster.intersectObjects(scene.children);
+
+        for ( var intr = intersects.length; intr --;) {
+            let inters = intersects[intr];
+
+            if (inters.object.name === "sputn") {
+
+                cursor_text.css({
+                    transform: "translate(-50%, 0)",
+                    opacity: 1
+                });
+
+                cursor_text.text(inters.object.desc);
+
+                break;
+            }
+
+        }
 
     }
     function render() {
