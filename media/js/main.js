@@ -32,7 +32,7 @@ const godrays_effect = new POSTPROCESSING.GodRaysEffect(
     sun,
     {
         resolutionScale: 1,
-        density: 1.2,
+        density: .95,
         decay: .95,
         weight: .9,
         samples: 100

@@ -16,6 +16,15 @@ function init() {
                             -mouse.center.y / 30
                         }px)`
                 })
+                $(".parallax.speed").eq(par).css({
+                    transform: `translate(
+                        ${
+                            -mouse.center.x / 10
+                        }px, 
+                        ${
+                            -mouse.center.y / 10
+                        }px)`
+                })
 
             }
         );

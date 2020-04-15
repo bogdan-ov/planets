@@ -14,37 +14,155 @@
     <title>Bogdanoff</title>
 </head>
 <body>
-
     <div class="cursor-text"></div>
     <svg class="cursor" width="40" height="40" viewBox="0 0 42 42" fill="none">
         <circle cx="21" cy="21" r="20" stroke="#fff" stroke-width="1" />     
     </svg>
-    <main class="main">
+
+    <nav class="nav content cldcenter">
+        <div class="in content parallax speed centered choose_page">
+            <div class="process centered">
+                <div class="bar"></div>
+            </div>
+            <ol class="list choose_page-list">
+                <li 
+                    class="list-item nav-item text upper padding min cursor_resize" 
+                    style="font-size: 24px;"
+                    onmouseup="location.href = '#'"
+                >
+                    портфолио
+                </li>
+                <li 
+                    class="list-item nav-item text upper padding min cursor_resize" 
+                    style="font-size: 24px;"
+                    onmouseup="location.href = '#'"
+                >
+                    узнать больше
+                </li>
+                <li 
+                    class="list-item nav-item text upper padding min cursor_resize" 
+                    style="font-size: 24px;"
+                    onmouseup="location.href = '#'"
+                >
+                    заказать
+                </li>
+                <li 
+                    class="list-item nav-item text upper padding min cursor_resize" 
+                    style="font-size: 24px;"
+                    onmouseup="location.href = '#'"
+                >
+                    отзывы
+                </li>
+                <li 
+                    class="list-item nav-item text upper padding min cursor_resize" 
+                    style="font-size: 24px;"
+                    onmouseup="location.href = '#'"
+                >
+                    подвал
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <header class="header content cldcenter padding hor max pfixed">
+        <div>
+            <div class="button padding min cursor_connecter audio_button">
+                <div class="button-text">
+                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+                        <!-- <rect width="1" height="30" x="10" y="10" class="wave" fill="#fff" />
+                        <rect width="1" height="30" x="20" y="10" class="wave" fill="#fff" />
+                        <rect width="1" height="30" x="30" y="10" class="wave" fill="#fff" />
+                        <rect width="1" height="30" x="40" y="10" class="wave" fill="#fff" /> -->
+                        <circle cx="25" cy="25" r="20" class="wave" stroke="#fff" />
+                        <circle cx="25" cy="25" r="10" class="wave" stroke="#fff" />
+                    </svg>
+                </div>
+            </div>
+            <audio
+                id="audio"
+                loop
+                src="/media/music/music.mp3">
+                    Your browser does not support the
+                    <code>audio</code> element.
+            </audio>
+        </div>
+    </header>
+
+    <main class="main content">
         <section class="section content cldcenter">
             <div class="content block centered cldcenter parallax">
-                <h1 class="text title upper button_topper">
+                <h1 class="text title upper button_topper fade fade_page1">
                     welcome
                 </h1>
-                <div class="button lines margin top" id="explore">
+                <div class="button lines margin top fade delay fade_page1" id="explore">
                     <span class="button-text">explore</span>
                 </div>
             </div>
         </section>
+        <!-- <section class="section content block cldcenter">
+            <div class="content centered fade fade_page2">
+                <nav class="nav">
+                    <ol class="list-ver">
+                        <li class="list-item cursor_resize planet_classes-item" planet_class="NPortfolio" id="portfolio">
+                            <a href="#">портфолио</a>
+                        </li>
+                        <li class="list-item cursor_resize planet_classes-item" planet_class="QAbout" id="about">
+                            <a href="#">узнать больше</a>
+                        </li>
+                        <li class="list-item cursor_resize planet_classes-item" planet_class="QCommunication" id="get">
+                            <a href="#">заказать</a>
+                        </li>
+                        <li class="list-item cursor_resize planet_classes-item" planet_class="NFeedbacks" id="feedbacks">
+                            <a href="#">отзывы</a>
+                        </li>
+                        <li class="list-item cursor_resize planet_classes-item" planet_class="DNFooter" id="footer">
+                            <a href="#">подвал</a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="conetent centered fade fade_page2">
+                <h1 
+                    class="text title upper content button text_activate"
+                    onmouseover="
+                        document.querySelector('#i').innerText = 'it'
+                    "
+                    onmouseout="
+                        document.querySelector('#i').innerText = 'i'
+                    "
+                    onclick="page = 1; pageUpdate()"
+                >
+                    <div>e</div>
+                    <div>x</div>
+                    <div class="text replace hiding">p</div>
+                    <div class="text replace hiding">l</div>
+                    <div class="text replace hiding">o</div>
+                    <div class="text replace hiding">r</div>
+                    <div class="text replace set_end" id="i">i</div>
+                    <div class="text replace hiding">n</div>
+                    <div class="text replace hiding">g</div>
+                </h1>
+            </div>
+        </section> -->
+
     </main>
     
     <script src="media/js/three/three.min.js"></script>
-    
-    <script src="media/js/three/loaders/OBJLoader.js"></script>
+
     <script src="media/js/shaders/postprocessing.js"></script>
     <script src="media/js/math.js"></script>
     <script src="media/js/main.js"></script>
     
-
+    
     <script src="media/js/managers/Planet.js"></script>
     <script src="media/js/managers/Mouse.js"></script>
     <script src="media/js/managers/Particle.js"></script>
     <script src="media/js/managers/Light.js"></script>
     <script src="media/js/managers/Camera.js"></script>
+    
+    <script src="media/js/fade.js"></script>
+    <script src="media/js/navigator.js"></script>
+    <script src="media/js/music_controller.js"></script>
 
     <script src="media/js/script.js"></script>
 

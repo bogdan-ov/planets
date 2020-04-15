@@ -1,23 +1,70 @@
-let page = 1;
-
-$("#explore").on("click", ()=> {
-    page = page === 1 ? 2 : 1;
-});
-
 function init() {
 
     const planet = new Planet(2);
 
+    let text,
+        text_geometry;
+    const loader = new THREE.FontLoader();
+    loader.load("https://raw.githubusercontent.com/mrdoob/three.js/master/examples/fonts/droid/droid_sans_regular.typeface.json", font=> {
+
+        text_geometry = new THREE.TextGeometry(
+            "Hello", 
+            {
+
+                font: font,
+
+                size: 1,
+                height: 1,
+            
+            }
+        );
+
+    });
+    
+    text = new THREE.Mesh(
+        text_geometry,
+        new THREE.MeshLambertMaterial
+    );
+    // text.position.set(
+    //     planet.position.x-2,
+    //     planet.position.y,
+    //     planet.position.z-2
+    // );
+
+    scene.add(text);
+
     let sputns = [];
-    let descs = [
-        "Qa15", "Qdmb19",
-        "Qb13", "Edang404",
-        "Gdoo2"
+    let types = [
+        {
+            name: "DNFooter",
+            size: .2,
+            bump: "1.jpg"
+        },
+        {
+            name: "QAbout",
+            size: .3,
+            bump: "3.jpg"
+        },
+        {
+            name: "NFeedbacks",
+            size: .3,
+            bump: "4.jpg"
+        },
+        {
+            name: "QCommunication",
+            size: .5,
+            bump: "4.jpg"
+        },
+        {
+            name: "NPortfolio",
+            size: .4,
+            bump: "3.jpg"
+        },
     ]
     for (let count = 0; count ++ < 5;) {
 
         sputns.push(
-            new Planet(.2, "sputn", descs[count-1])
+            new Planet(types[count-1].size, "sputn", types[count-1].name, types[count-1].bump)
         );
 
     }
@@ -39,61 +86,31 @@ function init() {
 
     }
 
-    let delta = 0;
+    let 
+        delta = 0,
+        speed;
     loop();
     function loop() {
         requestAnimationFrame(loop);
         delta += .1;
+        speed = delta / 50;
 
         update();
         render();
     }
     function update() {
-
-        let speed = delta / 50;
-
-        planet.mesh.rotateY(.002);
-        if (page === 1) {
-
-            planet.mesh.position.set(
-                sin(speed) * 30,
-                0,
-                cos(speed) * 30
-            );
-
-        }
-        if (page === 2) {
-
-            planet.mesh.position.set(
-                sin(speed + 20) * 30,
-                0,
-                cos(speed + 20) * 30
-            );
-
-        }
-
-        for (let sputn in sputns) {
-
-            let a = sputn * (PI / (sputns.length / 2)) + speed;
         
-            sputns[sputn].mesh.position.set(
-                sin(a) * 3 + planet.mesh.position.x,
-                sin(-a) * 3 + planet.mesh.position.y,
-                cos(a) * 3 + planet.mesh.position.z,
-            );
-        
-        }
+        if (page === 1) solarMove();
 
-        // camera.position.set(
-        //     planet.mesh.position.x + mouse.center.x / 1000, 
-        //     planet.mesh.position.y + 2 - mouse.center.y / 1000,
-        //     planet.mesh.position.z + 5
-        // );
-        camera.position.x += (planet.mesh.position.x - (camera.position.x + mouse.center.x / 500)) / 50;
-        camera.position.y += ((planet.mesh.position.y + 2) - (camera.position.y - mouse.center.y / 500)) / 50;
-        camera.position.z += ((planet.mesh.position.z + 5) - camera.position.z) / 50;
+        moveTo(
+            planet.mesh.position.x,
+            planet.mesh.position.y,
+            planet.mesh.position.z
+        );
         
         camera.lookAt(planet.mesh.position);
+        easing(delta);
+
         sun.lookAt(camera.position);
 
         // Raycasting
@@ -104,7 +121,7 @@ function init() {
         for ( var intr = intersects.length; intr --;) {
             let inters = intersects[intr];
 
-            if (inters.object.name === "sputn") {
+            if (inters.object.name === "sputn" && page === 1) {
 
                 cursor_text.css({
                     transform: "translate(-50%, 0)",
@@ -119,9 +136,30 @@ function init() {
         }
 
     }
-    function render() {
+    function solarMove() {
 
-        // barier.render(scene, camera);
+        for (let sputn in sputns) {
+
+            let a = sputn * (PI / (sputns.length / 2)) + speed;
+        
+            sputns[sputn].mesh.position.set(
+                sin(a) * 3 + planet.mesh.position.x,
+                sin(-a) * 3 + planet.mesh.position.y,
+                cos(a) * 3 + planet.mesh.position.z,
+            );
+        
+        }
+
+        planet.mesh.rotateY(.002);
+
+        planet.mesh.position.set(
+            sin(speed) * 30,
+            0,
+            cos(speed) * 30
+        );
+
+    }
+    function render() {        
         composer.render(.1);
     }
 
