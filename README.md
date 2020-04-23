@@ -1,2 +1,2 @@
-# bogdanoff
-link: https://cloudbogdan.github.io/bogdanoff/
+# Planets (old version of my site)
+link: https://cloudbogdan.github.io/planets/
